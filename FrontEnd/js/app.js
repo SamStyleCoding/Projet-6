@@ -1,21 +1,28 @@
-async function getWorks() {
+async function getWorks(filter) {
+
+	document.querySelector(".gallery").innerHTML = ""
 
 	const url = "http://localhost:5678/api/works";
 	
 	try {
-
 	  const response = await fetch(url);
 
 	  if (!response.ok) {
 		throw new Error(`Response status: ${response.status}`);
 	  }
 	  const json = await response.json();
-	  console.log(json);
-
-	  for(let i = 0; i < json.length; i++){
-		setFigure(json[i]);
+	  
+	  if(filter) {
+		const filtered = json.filter((data) => data.categoryId === filter);
+		for(let i = 0; i < filtered.length; i++){
+			setFigure(filtered[i]);
+		}
+	  } 
+	  else {
+		for(let i = 0; i < json.length; i++){
+			setFigure(json[i]);
+	    }
 	  }
-
 	}
 	catch (error) {
 	  console.error(error.message);
@@ -41,14 +48,12 @@ async function getCategories() {
 	const url = "http://localhost:5678/api/categories";
 	
 	try {
-
 	  const response = await fetch(url);
 
 	  if (!response.ok) {
 		throw new Error(`Response status: ${response.status}`);
 	  }
 	  const json = await response.json();
-	  console.log(json);
 
 	  for(let i = 0; i < json.length; i++){
 		setFilter(json[i]);
@@ -64,11 +69,14 @@ getCategories();
 
 function setFilter(data){
 	const div = document.createElement("div");
+	div.className = data.id;
 	div.innerHTML = `${data.name}`;
-
 	document.querySelector(".div-projets").append(div);
+	div.addEventListener("click", () => {
+		getWorks(data.id)
+	});
 }
-
-
-
+document.querySelector(".tous").addEventListener('click', () => {
+	getWorks()
+});
 
