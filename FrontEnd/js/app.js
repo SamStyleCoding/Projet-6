@@ -80,3 +80,16 @@ document.querySelector(".tous").addEventListener('click', () => {
 	getWorks()
 });
 
+
+
+
+function modeEdition () {
+	if(localStorage.authToken) {
+		const editBanner = document.createElement("div");
+		editBanner.className = "edition";
+		editBanner.innerHTML = `<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>`;
+		document.body.prepend(editBanner);
+	}
+}
+modeEdition();
+

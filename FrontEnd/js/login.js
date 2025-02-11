@@ -25,16 +25,10 @@ async function handleSubmit(event) {
 		errorBox.innerHTML = "Error";
 		document.querySelector("form").prepend(errorBox);
 	}
-	
-	let result = await response.json();
-
-	const token = result.token;
-	localStorage.setItem("authToken", token);
-
-	if(response.status != 200) {
-		return new Error("error")
-	}
 	else{
+		let result = await response.json();
+		const token = result.token;
+		localStorage.setItem("authToken", token);
 		window.location.href = 'index.html';
 	}
 
