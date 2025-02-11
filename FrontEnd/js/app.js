@@ -1,4 +1,4 @@
-async function getWorks(filter) {
+async function getWorks(filterId) {
 
 	document.querySelector(".gallery").innerHTML = ""
 
@@ -12,8 +12,8 @@ async function getWorks(filter) {
 	  }
 	  const json = await response.json();
 	  
-	  if(filter) {
-		const filtered = json.filter((data) => data.categoryId === filter);
+	  if(filterId) {
+		const filtered = json.filter((data) => data.categoryId === filterId);
 		for(let i = 0; i < filtered.length; i++){
 			setFigure(filtered[i]);
 		}
