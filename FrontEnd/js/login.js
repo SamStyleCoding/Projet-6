@@ -1,6 +1,6 @@
 const loginApi = "http://localhost:5678/api/users/login";
 
-document.getElementById("loginFrom").addEventListener('submit', handleSubmit);
+document.getElementById("loginForm").addEventListener('submit', handleSubmit);
 
 
 async function handleSubmit(event) {
@@ -18,10 +18,24 @@ async function handleSubmit(event) {
 		},
 		body: JSON.stringify(user),
 	});
+
+	if(response.status != 200) {
+		const errorBox = document.createElement("div");
+		errorBox.className = "error-login";
+		errorBox.innerHTML = "Error";
+		document.querySelector("form").prepend(errorBox);
+	}
 	
 	let result = await response.json();
-	console.log(result);
-	console.log("E-mail:", user.email);
-	console.log("Mot de passe:", user.password);
-}
 
+	const token = result.token;
+	localStorage.setItem("authToken", token);
+
+	if(response.status != 200) {
+		return new Error("error")
+	}
+	else{
+		window.location.href = 'index.html';
+	}
+
+}
