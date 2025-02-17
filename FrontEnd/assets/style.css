@@ -3,6 +3,10 @@
    License: none (public domain)
 */
 
+* {
+	box-sizing: border-box;
+}
+
 .edition{
 	background-color: black;
 	width: 100%;
@@ -15,6 +19,34 @@
 	top: 0;
 	position: absolute;
 }
+.edition a {
+	color: white;
+}
+.edition a:visited {
+	color: white;
+}
+
+.modal{
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-wrapper {
+	overflow: auto;
+	background-color: white;
+	width: 600px;
+	max-width: calc(100vh - 20px);
+	max-height: calc(100vh - 20px);
+	padding: 20px;
+}
+
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -175,8 +207,19 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
 }
+
+.gallery-modal{
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 10px;
+	grid-row-gap: 20px;
+}
+.gallery-modal img{
+	width: 100%;
+}
+
 #contact {
 	width: 50%;
 margin: auto;
@@ -232,4 +275,83 @@ footer nav ul {
 	display: flex;
 	justify-content: center;
 	padding: 10px;
+}
+
+.titre-modal{
+	text-align: center;
+	font-family: 'Work Sans';
+	font-size: 18px;
+	font-weight: normal;
+	margin: 20px;
+}
+
+hr{
+	margin: 50px 0;
+}
+
+.model-button-container{
+	display: flex;
+	justify-content: center;
+}
+
+.add-photo{
+	border: 1px solid #1D6154;
+	padding: 10px 20px;
+	border-radius: 25px;
+	font-family: 'Syne';
+	color: white;
+	cursor: pointer;
+	margin-top: 15px;
+	background-color: #1D6154;
+	margin-bottom: 40px;
+	width: 250px;
+}
+
+.close-button-container{
+	display: flex;
+	justify-content: end;
+}
+
+.js-modal-close{
+	background-color: white;
+	border: none;
+	font-weight: bold;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.container-projets{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.container-projets h2{
+	text-align: center;
+}
+
+.container-projets p{
+	margin-left: 20px;
+	margin-bottom: 25px;
+	cursor: pointer;
+}
+
+
+.image-container{
+	position: relative;
+	display: inline-block;
+}
+.image-container img{
+	display: block;
+}
+.image-container .overlay-icon{
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	font-size: 16px;
+	cursor: pointer;
+	background-color: black;
+	color: white;
+	padding: 4px;
+	border-radius: 10%;
 }

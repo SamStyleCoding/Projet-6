@@ -12,13 +12,28 @@
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+	<aside id="modal1" class="modal" aria-hidden="true" style="display: none">
+		<div class="modal-wrapper js-modal-stop">
+			<div class="close-button-container">
+				<button class="js-modal-close">
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</div>
+			<h3 class="titre-modal">Galerie photo</h3>
+			<div class="gallery-modal"></div>
+			<hr />
+			<div class="model-button-container">
+				<button class="add-photo">Ajouter une photo</button>
+			</div>
+		</div>
+	</aside>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li><a href="#Projets">projets</a></li>
 			<li><a href="#Contact">contact</a></li>
-			<li><a href="/FrontEnd/login.html">login</a></li>
+			<li class="login"><a href="/FrontEnd/login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -36,7 +51,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2 id="Projets">Mes Projets</h2>
+		<div class="container-projets">
+			<h2 id="Projets">Mes Projets</h2>
+			<p>
+				<i class="fa-regular fa-pen-to-square"></i>
+				modifier
+			</p>
+		</div>
 		<div class="div-projets">
 			<div class="tous">Tous</div>
 		</div>
