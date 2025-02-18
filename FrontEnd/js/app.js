@@ -25,6 +25,10 @@ async function getWorks(filterId) {
 			setModalFigure(json[i]);
 	    }
 	  }
+
+	  const deleteTrashCan = document.querySelectorAll(".fa-trash-can");	  
+	  deleteTrashCan.forEach((e) => e.addEventListener("click", (event) =>  deleteWork(event)));
+
 	}
 	catch (error) {
 	  console.error(error.message);
@@ -46,7 +50,7 @@ function setModalFigure(data){
 	figure.innerHTML = `<div class="image-container">
 						<img src=${data.imageUrl} alt=${data.title}>
 				        <figcaption>${data.title}</figcaption>
-						<i class="fa-solid fa-trash-can overlay-icon"></i>
+						<i id=${data.id} class="fa-solid fa-trash-can overlay-icon"></i>
 			           </div>`;
 
 	document.querySelector(".gallery-modal").append(figure);
@@ -141,6 +145,30 @@ document.querySelectorAll(".js-model").forEach((a) => {
 
 
 
+async function deleteWork(event) {
+	event.stopPropagation();
+		const id = event.srcElement.id;
+		const deleteApi = "http://localhost:5678/api/works/";
+		const token = localStorage.authToken;
+
+		let response = await fetch(deleteApi + id, {
+			method: "DELETE",
+			headers: {
+				Authorization: "Bearer " + token,
+			},
+		});
+		if(response.status === 401 || response.status === 500 ) {
+			const errorBox = document.createElement("div");
+			errorBox.className = "error-login";
+			errorBox.innerHTML = "Error";
+			document.querySelector(".model-button-container").prepend(errorBox);
+		}
+		else{
+			let result = await response.json();
+			console.log(result);
+		}
+
+	}
 
 
 
