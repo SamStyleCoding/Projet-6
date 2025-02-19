@@ -189,10 +189,11 @@ const switchModal = function () {
 				<div id="contact">
 					<form id="loginForm" action="#" method="post">
 						<div class="file-section">
-						<div><i class="fa-regular fa-image"></i></div>
-							<label for="file">+ Ajouter photo</label>
+							<div id="photo-container"></div>
+							<div><i class="fa-regular fa-image picture-loaded"></i></div>
+							<label class="picture-loaded" for="file">+ Ajouter photo</label>
 							<input type="file" id="file" name="file" accept="image/png, image/jpeg">
-							<p>jpg, png : 4mo max</p>
+							<p class="picture-loaded">jpg, png : 4mo max</p>
 						</div>
 						<label for="title">Titre</label>
 						<input type="text" name="title" id="title" required>
@@ -207,6 +208,25 @@ const switchModal = function () {
 				<hr />
 				<input type="submit" value="Valider" id="submitButton" class="add-photo model-button-container" style="cursor: pointer;">`;
 				document.querySelector("#file").style.display = 'none';
+
+				document.getElementById("file").addEventListener("change", (event) => {
+					const file = event.target.files[0];
+					if(file && (file.type === "image/jpeg" || file.type === "image/png")) {
+						const reader = new FileReader();
+						reader.onload = function(e) {
+							const img = document.createElement("img");
+							img.src = e.target.result;
+							img.alt = "Uploaded Photo";
+							document.getElementById("photo-container").appendChild(img);
+							document.querySelectorAll(".picture-loaded").forEach((e) => e.style.display = "none");
+						};
+						reader.readAsDataURL(file);
+					}
+					else{
+						alert("veuillez sélectionner une image au format JPG ou PNG");
+					}
+				});
+
 				document.querySelector(".fa-xmark").addEventListener("click", closeModal);
 
 
@@ -233,8 +253,6 @@ const backButton = document.querySelector(".js-modal-back");
 
 };
 document.querySelector(".add-photo").addEventListener("click", switchModal);
-
-
 
 
 

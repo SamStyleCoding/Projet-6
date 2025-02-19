@@ -401,3 +401,9 @@ hr{
 	font-size: 60px;
 	color: gray;
 }
+#photo-container{
+	width: 80%;
+}
+#photo-container img{
+	width: 100%;
+}
