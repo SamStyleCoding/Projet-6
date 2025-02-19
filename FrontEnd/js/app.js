@@ -173,6 +173,75 @@ async function deleteWork(event) {
 
 
 
+const switchModal = function () {
+
+	document
+	.querySelector(".modal-wrapper")
+	.innerHTML=`<div class="modal-buttons-container">
+					<button class="js-modal-back">
+						<i class="fa-solid fa-arrow-left"></i>
+					</button>
+					<button class="js-modal-close">
+						<i class="fa-solid fa-xmark"></i>
+					</button>
+				</div>
+				<h3 class="titre-modal">Ajout photo</h3>
+				<div id="contact">
+					<form id="loginForm" action="#" method="post">
+						<div class="file-section">
+						<div><i class="fa-regular fa-image"></i></div>
+							<label for="file">+ Ajouter photo</label>
+							<input type="file" id="file" name="file" accept="image/png, image/jpeg">
+							<p>jpg, png : 4mo max</p>
+						</div>
+						<label for="title">Titre</label>
+						<input type="text" name="title" id="title" required>
+						<label for="category">Catégory</label>
+						<select name="category" id="category">
+							<option value="objet">Objets</option>
+							<option value="appartement">Appartements</option>
+							<option value="hotel">Hotels & Restaurants</option>
+						</select>
+					</form>
+				</div>
+				<hr />
+				<input type="submit" value="Valider" id="submitButton" class="add-photo model-button-container" style="cursor: pointer;">`;
+				document.querySelector("#file").style.display = 'none';
+				document.querySelector(".fa-xmark").addEventListener("click", closeModal);
+
+
+const backButton = document.querySelector(".js-modal-back");
+	backButton.addEventListener("click", function () {
+		document
+		.querySelector(".modal-wrapper")
+		.innerHTML = `<div class="close-button-container">
+						<button class="js-modal-close">
+							<i class="fa-solid fa-xmark"></i>
+						</button>
+						</div>
+						<h3 class="titre-modal">Galerie photo</h3>
+						<div class="gallery-modal"></div>
+						<hr />
+						<div class="model-button-container">
+							<button class="add-photo">Ajouter une photo</button>
+						</div>`;
+
+		document.querySelector(".js-modal-close").addEventListener("click", closeModal);
+		document.querySelector(".add-photo").addEventListener("click", switchModal);
+		getWorks();
+	});
+
+};
+document.querySelector(".add-photo").addEventListener("click", switchModal);
+
+
+
+
+
+
+
+
+
 
 
 
