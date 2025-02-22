@@ -164,11 +164,38 @@ async function deleteWork(event) {
 			document.querySelector(".model-button-container").prepend(errorBox);
 		}
 		else{
-			let result = await response.json();
-			console.log(result);
+			try {
+				result = await response.json();
+			} 
+			catch {
+				console.warn("No JSON response from server, but delete was successful.");
+			}
+
+        const deletedElement = document.getElementById(id).closest("figure");
+			if (deletedElement) {
+				deletedElement.remove();
+			}
 		}
 
+		updateGallery();
+
 	}
+
+	async function updateGallery() {
+		const galleryContainer = document.querySelector(".gallery"); 
+		galleryContainer.innerHTML = ""; 
+	
+		let response = await fetch("http://localhost:5678/api/works");
+		let works = await response.json();
+	
+		works.forEach(work => {
+			const figure = document.createElement("figure");
+			figure.innerHTML = `<img src="${work.imageUrl}" alt="${work.title}">
+								<figcaption>${work.title}</figcaption>`;
+			galleryContainer.appendChild(figure);
+		});
+	}
+	
 
 
 
@@ -187,7 +214,7 @@ const switchModal = function () {
 				</div>
 				<h3 class="titre-modal">Ajout photo</h3>
 				<div id="contact">
-					<form id="loginForm" action="#" method="post">
+					<form id="picture-form" action="#" method="post">
 						<div class="file-section">
 							<div id="photo-container"></div>
 							<div><i class="fa-regular fa-image picture-loaded"></i></div>
@@ -199,35 +226,15 @@ const switchModal = function () {
 						<input type="text" name="title" id="title" required>
 						<label for="category">Catégory</label>
 						<select name="category" id="category">
-							<option value="objet">Objets</option>
-							<option value="appartement">Appartements</option>
-							<option value="hotel">Hotels & Restaurants</option>
+							<option value="1">Objets</option>
+							<option value="2">Appartements</option>
+							<option value="3">Hotels & Restaurants</option>
 						</select>
+						<hr />
+						<input type="submit" value="Valider" id="submitButton" class="add-photo model-button-container" style="cursor: pointer;">
 					</form>
-				</div>
-				<hr />
-				<input type="submit" value="Valider" id="submitButton" class="add-photo model-button-container" style="cursor: pointer;">`;
-				document.querySelector("#file").style.display = 'none';
-
-				document.getElementById("file").addEventListener("change", (event) => {
-					const file = event.target.files[0];
-					if(file && (file.type === "image/jpeg" || file.type === "image/png")) {
-						const reader = new FileReader();
-						reader.onload = function(e) {
-							const img = document.createElement("img");
-							img.src = e.target.result;
-							img.alt = "Uploaded Photo";
-							document.getElementById("photo-container").appendChild(img);
-							document.querySelectorAll(".picture-loaded").forEach((e) => e.style.display = "none");
-						};
-						reader.readAsDataURL(file);
-					}
-					else{
-						alert("veuillez sélectionner une image au format JPG ou PNG");
-					}
-				});
-
-				document.querySelector(".fa-xmark").addEventListener("click", closeModal);
+				</div>`;
+	document.querySelector("#file").style.display = 'none';
 
 
 const backButton = document.querySelector(".js-modal-back");
@@ -246,9 +253,84 @@ const backButton = document.querySelector(".js-modal-back");
 							<button class="add-photo">Ajouter une photo</button>
 						</div>`;
 
-		document.querySelector(".js-modal-close").addEventListener("click", closeModal);
-		document.querySelector(".add-photo").addEventListener("click", switchModal);
-		getWorks();
+	document.querySelector(".js-modal-close").addEventListener("click", closeModal);
+	document.querySelector(".add-photo").addEventListener("click", switchModal);
+	getWorks();
+	});
+	document.querySelector(".fa-xmark").addEventListener("click", closeModal);
+
+	
+
+	document.getElementById("file").addEventListener("change", function (event) {
+		file = event.target.files[0];
+		if(file && (file.type === "image/jpeg" || file.type === "image/png")) {
+			const reader = new FileReader();
+			reader.onload = function(e) {
+				const img = document.createElement("img");
+				img.src = e.target.result;
+				img.alt = "Uploaded Photo";
+				document.getElementById("photo-container").appendChild(img);
+			};
+			reader.readAsDataURL(file);
+			document.querySelectorAll(".picture-loaded").forEach((e) => e.style.display = "none");
+		}
+		else{
+			alert("veuillez sélectionner une image au format JPG ou PNG");
+		}
+	});
+	
+
+
+const titleInput = document.querySelector("#title");
+let titleValue = "";
+	titleInput.addEventListener("input", () => {
+		titleValue = titleInput.value;
+	});
+
+
+let selectedValue = "1";
+	document.getElementById("category").addEventListener("change", function () {
+		selectedValue = this.value;
+	});
+
+
+const addPictureForm = document.getElementById("picture-form");
+	addPictureForm.addEventListener("submit", async (event) => {
+		event.preventDefault();
+		const hasImage = document.querySelector("#photo-container").firstChild;
+		if(hasImage && titleValue) {
+
+			const formData = new FormData();
+			
+			formData.append("image", file);
+			formData.append("title", titleValue);
+			formData.append("category", selectedValue);
+
+			const token = localStorage.authToken;
+
+			let response = await fetch("http://localhost:5678/api/works", {
+				method: "POST",
+				headers: {
+					Authorization: "Bearer " + token,
+				},
+				body: formData,
+			});
+		
+			if(!response.ok) {
+				alert("Error")
+			}
+			else {
+				let result = await response.json();
+				document
+				.querySelector(".gallery")
+				.innerHTML = `<figure>
+								<img src="${result.imageUrl}" alt="${result.title}">
+								<figcaption>${result.title}</figcaption>
+							  </figure>`;
+
+				location.reload();
+				}
+			}
 	});
 
 };
