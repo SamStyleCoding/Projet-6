@@ -22,7 +22,7 @@ async function handleSubmit(event) {
 	if(response.status != 200) {
 		const errorBox = document.createElement("div");
 		errorBox.className = "error-login";
-		errorBox.innerHTML = "Error";
+		errorBox.innerHTML = "Veuillez vérifier votre email ou votre mot de passe";
 		document.querySelector("form").prepend(errorBox);
 	}
 	else{

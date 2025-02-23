@@ -407,3 +407,7 @@ hr{
 #photo-container img{
 	width: 100%;
 }
+
+.modifier{
+	display: none;
+}

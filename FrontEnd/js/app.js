@@ -1,7 +1,8 @@
 async function getWorks(filterId) {
 
 	document.querySelector(".gallery").innerHTML = ""
-
+	document.querySelector(".gallery-modal").innerHTML = ""
+	
 	const url = "http://localhost:5678/api/works";
 	
 	try {
@@ -113,6 +114,14 @@ function modeEdition () {
 
 		const login = document.querySelector(".login");
 		login.textContent = "logout";
+		login.style.cursor = "pointer"
+
+		document.querySelector(".modifier").style.display = "block"
+
+		document.querySelector(".login").addEventListener("click", () => {
+			localStorage.clear();
+			window.location.href = '/FrontEnd/login.html';
+		})
 	}
 }
 modeEdition();
@@ -335,133 +344,3 @@ const addPictureForm = document.getElementById("picture-form");
 
 };
 document.querySelector(".add-photo").addEventListener("click", switchModal);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let modal = null
-// const focusableSelector = "button, a, input, textarea";
-// let focusables = [];
-
-// function modeEdition () {
-// 	if(localStorage.authToken) {
-// 		const editBanner = document.createElement("div");
-// 		editBanner.className = "edition";
-// 		editBanner.innerHTML = `<p><a href="#modal1" class="js-model"><i class="fa-regular fa-pen-to-square"></i>Mode édition</a></p>`;
-// 		document.body.prepend(editBanner);
-
-// 		const login = document.querySelector(".login");
-// 		login.textContent = "logout";
-// 	}
-// }
-// modeEdition();
-
-// const openModel = function(e) {
-// 	e.preventDefault();
-// 	modal = document.querySelector(e.target.getAttribute("href"));
-// 	focusables = Array.from(modal.querySelectorAll(focusableSelector));
-// 	focusables[0].focus();
-// 	// const target = document.querySelector(e.target.getAttribute("href"));
-// 	modal.style.display = null;
-// 	modal.removeAttribute("aria-hidden");
-// 	modal.setAttribute("aria-modal", "true");
-// 	// modal = target;
-// 	modal.addEventListener("click", closeModal);
-// 	modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
-// 	modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
-// };
-
-// const closeModal = (e) => {
-// 	if(modal === null) return;
-// 	e.preventDefault();
-// 	modal.style.display = "none";
-// 	modal.removeAttribute("aria-modal");
-// 	modal.setAttribute("aria-hidden", "true");
-// 	modal.removeEventListener("click", closeModal);
-// 	modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
-// 	modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
-// 	modal = null;
-// };
-
-// const stopPropagation = (e) => {
-// 	e.stopPropagation();
-// }
-
-// const focusInModal = (e) => {
-// 	e.preventDefault();
-// 	let index = focusables.findIndex( f => f === modal.querySelector(":focus"));
-// 	// modal.querySelector(":focus");
-// 	if(e.shiftKey === true) {
-// 		index--;
-// 	}
-// 	else{
-// 		index++;
-// 	}
-
-// 	if(index >= focusables.length) {
-// 		index = 0;
-// 	}
-// 	if(index > 0) {
-// 		index = focusables.length - 1;
-// 	}
-// }
-
-// window.addEventListener("keydown", function(e) {
-// 	if(e.key === 'Escape' || e.key === 'Esc'){
-// 		closeModal(e);
-// 	}
-// 	if(e.key === 'Tab' && modal !== null){
-// 		focusInModal(e);
-// 	}
-// 	focusables[index].focus();
-// });
-
-// document.querySelectorAll(".js-model").forEach((a) => {
-// 	a.addEventListener("click", openModel);
-// });
-
-
-
-
-
-
-
-
-// modal.addEventListener("click", closeModal);
-
-
-
-// modal.removeEventListener("click", closeModal);
-// modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
