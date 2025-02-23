@@ -120,7 +120,7 @@ function modeEdition () {
 
 		document.querySelector(".login").addEventListener("click", () => {
 			localStorage.clear();
-			window.location.href = '/FrontEnd/login.html';
+			window.location.href = 'login.html';
 		})
 	}
 }
