@@ -330,17 +330,11 @@ const addPictureForm = document.getElementById("picture-form");
 			}
 			else {
 				let result = await response.json();
-				document
-				.querySelector(".gallery")
-				.innerHTML = `<figure>
-								<img src="${result.imageUrl}" alt="${result.title}">
-								<figcaption>${result.title}</figcaption>
-							  </figure>`;
-
+				updateGallery();
 				location.reload();
 				}
 			}
 	});
 
 };
-document.querySelector(".add-photo").addEventListener("click", switchModal);
+document.querySelector(".add-photo").addEventListener("click", switchModal, closeModal);
