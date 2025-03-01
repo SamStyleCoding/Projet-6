@@ -337,4 +337,4 @@ const addPictureForm = document.getElementById("picture-form");
 	});
 
 };
-document.querySelector(".add-photo").addEventListener("click", switchModal, closeModal);
+document.querySelector(".add-photo").addEventListener("click", switchModal);
